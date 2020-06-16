@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqlTableAssistant.MySql", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqlTableAssistant.SQLite", "SqlTableAssistant.SQLite\SqlTableAssistant.SQLite.csproj", "{126A3F1A-FB50-4E51-B445-140509F48A27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlTableAssistant.Dommel", "SqlTableAssistant.Dommel\SqlTableAssistant.Dommel.csproj", "{45DB24A1-53D6-4CB5-968A-5B9501230E05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqlTableAssistant.Dommel", "SqlTableAssistant.Dommel\SqlTableAssistant.Dommel.csproj", "{45DB24A1-53D6-4CB5-968A-5B9501230E05}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
