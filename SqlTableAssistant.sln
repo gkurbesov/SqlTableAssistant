@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29926.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqlTableAssistant", "SqlTableAssistant\SqlTableAssistant.csproj", "{A3220295-C28D-4789-B5E8-443669B42D5B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqlTableAssistant.MySql", "SqlTableAssistant.MySql\SqlTableAssistant.MySql.csproj", "{C3C700C9-385C-4DD1-906B-9D4AFA1926D7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqlTableAssistant.SQLite", "SqlTableAssistant.SQLite\SqlTableAssistant.SQLite.csproj", "{126A3F1A-FB50-4E51-B445-140509F48A27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlTableAssistant.Dommel", "SqlTableAssistant.Dommel\SqlTableAssistant.Dommel.csproj", "{45DB24A1-53D6-4CB5-968A-5B9501230E05}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A3220295-C28D-4789-B5E8-443669B42D5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3220295-C28D-4789-B5E8-443669B42D5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3220295-C28D-4789-B5E8-443669B42D5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3220295-C28D-4789-B5E8-443669B42D5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3C700C9-385C-4DD1-906B-9D4AFA1926D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3C700C9-385C-4DD1-906B-9D4AFA1926D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3C700C9-385C-4DD1-906B-9D4AFA1926D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3C700C9-385C-4DD1-906B-9D4AFA1926D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{126A3F1A-FB50-4E51-B445-140509F48A27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{126A3F1A-FB50-4E51-B445-140509F48A27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{126A3F1A-FB50-4E51-B445-140509F48A27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{126A3F1A-FB50-4E51-B445-140509F48A27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45DB24A1-53D6-4CB5-968A-5B9501230E05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45DB24A1-53D6-4CB5-968A-5B9501230E05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45DB24A1-53D6-4CB5-968A-5B9501230E05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45DB24A1-53D6-4CB5-968A-5B9501230E05}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FBF23566-287F-42AA-9832-5A8B7FA049BA}
+	EndGlobalSection
+EndGlobal
