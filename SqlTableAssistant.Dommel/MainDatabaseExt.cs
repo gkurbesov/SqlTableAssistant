@@ -18,7 +18,7 @@ namespace SqlTableAssistant.Dommel
                 {
                     if (connection.State == ConnectionState.Open)
                     {
-                        var result = db.Get<T>(index);
+                        var result = connection.Get<T>(index);
                         return result;
                     }
                 }
@@ -39,7 +39,7 @@ namespace SqlTableAssistant.Dommel
                 {
                     if (connection.State == ConnectionState.Open)
                     {
-                        var result = db.Get<T>(index);
+                        var result = connection.Get<T>(index);
                         value = result;
                         return true;
                     }
@@ -60,7 +60,7 @@ namespace SqlTableAssistant.Dommel
                 {
                     if (connection.State == ConnectionState.Open)
                     {
-                        var list = db.GetAll<T>().ToArray();
+                        var list = connection.GetAll<T>().ToArray();
                         return list;
                     }
                 }
@@ -80,7 +80,7 @@ namespace SqlTableAssistant.Dommel
                 {
                     if (connection.State == ConnectionState.Open)
                     {
-                        var list = db.Select<T>(predicate);
+                        var list = connection.Select<T>(predicate);
                         return list;
                     }
                 }
@@ -91,6 +91,7 @@ namespace SqlTableAssistant.Dommel
             }
             return Enumerable.Empty<T>();
         }
+
         public static bool TrySelect<T>(this IMainDatabase db, Expression<Func<T, bool>> predicate, out IEnumerable<T> collection) where T : class
         {
             try
@@ -99,7 +100,7 @@ namespace SqlTableAssistant.Dommel
                 {
                     if (connection.State == ConnectionState.Open)
                     {
-                        collection = db.Select<T>(predicate);
+                        collection = connection.Select<T>(predicate);
                         return collection.Count() > 0;
                     }
                 }
@@ -111,6 +112,30 @@ namespace SqlTableAssistant.Dommel
             collection = Enumerable.Empty<T>();
             return false;
         }
+
+        public static long InsertAsIndex<T>(this IMainDatabase db, T value) where T : class
+        {
+            try
+            {
+                if (db.IsConnected() && db.GetNewConnection(true) is IDbConnection connection)
+                {
+                    if (connection.State == ConnectionState.Open)
+                    {
+                        var insert_ind = connection.Insert(value);
+                        if (insert_ind != null)
+                            return (long)insert_ind;
+                        else
+                            return -1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                db.CallError(ex.Message, ex.StackTrace);
+            }
+            return -1;
+        }
+
         public static T Insert<T>(this IMainDatabase db, T value) where T : class
         {
             try
@@ -119,7 +144,7 @@ namespace SqlTableAssistant.Dommel
                 {
                     if (connection.State == ConnectionState.Open)
                     {
-                        var insert_ind = db.Insert(value);
+                        var insert_ind = connection.Insert(value);
                         if (insert_ind != null)
                         {
                             return db.Get<T>(Convert.ToInt32(insert_ind));
@@ -165,7 +190,7 @@ namespace SqlTableAssistant.Dommel
                 {
                     if (connection.State == ConnectionState.Open)
                     {
-                        return db.Update(value);
+                        return connection.Update(value);
                     }
                 }
             }
