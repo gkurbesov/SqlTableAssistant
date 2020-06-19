@@ -14,7 +14,7 @@ namespace SqlTableAssistant.Dommel
         {
             try
             {
-                if (db.IsConnected() && db.GetNewConnection(true) is IDbConnection connection)
+                if (db.GetNewConnection(true) is IDbConnection connection)
                 {
                     if (connection.State == ConnectionState.Open)
                     {
@@ -35,7 +35,7 @@ namespace SqlTableAssistant.Dommel
             value = null;
             try
             {
-                if (db.IsConnected() && db.GetNewConnection(true) is IDbConnection connection)
+                if (db.GetNewConnection(true) is IDbConnection connection)
                 {
                     if (connection.State == ConnectionState.Open)
                     {
@@ -56,7 +56,7 @@ namespace SqlTableAssistant.Dommel
         {
             try
             {
-                if (db.IsConnected() && db.GetNewConnection(true) is IDbConnection connection)
+                if (db.GetNewConnection(true) is IDbConnection connection)
                 {
                     if (connection.State == ConnectionState.Open)
                     {
@@ -76,7 +76,7 @@ namespace SqlTableAssistant.Dommel
         {
             try
             {
-                if (db.IsConnected() && db.GetNewConnection(true) is IDbConnection connection)
+                if (db.GetNewConnection(true) is IDbConnection connection)
                 {
                     if (connection.State == ConnectionState.Open)
                     {
@@ -96,7 +96,7 @@ namespace SqlTableAssistant.Dommel
         {
             try
             {
-                if (db.IsConnected() && db.GetNewConnection(true) is IDbConnection connection)
+                if (db.GetNewConnection(true) is IDbConnection connection)
                 {
                     if (connection.State == ConnectionState.Open)
                     {
@@ -113,17 +113,37 @@ namespace SqlTableAssistant.Dommel
             return false;
         }
 
+        public static T First<T>(this IMainDatabase db, Expression<Func<T, bool>> predicate) where T : class
+        {
+            try
+            {
+                if (db.GetNewConnection(true) is IDbConnection connection)
+                {
+                    if (connection.State == ConnectionState.Open)
+                    {
+                        var item = connection.FirstOrDefault<T>(predicate);
+                        return item;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                db.CallError(ex.Message, ex.StackTrace);
+            }
+            return null;
+        }
+
         public static long InsertAsIndex<T>(this IMainDatabase db, T value) where T : class
         {
             try
             {
-                if (db.IsConnected() && db.GetNewConnection(true) is IDbConnection connection)
+                if (db.GetNewConnection(true) is IDbConnection connection)
                 {
                     if (connection.State == ConnectionState.Open)
                     {
                         var insert_ind = connection.Insert(value);
                         if (insert_ind != null)
-                            return (long)insert_ind;
+                            return long.Parse(insert_ind.ToString());
                         else
                             return -1;
                     }
@@ -140,14 +160,14 @@ namespace SqlTableAssistant.Dommel
         {
             try
             {
-                if (db.IsConnected() && db.GetNewConnection(true) is IDbConnection connection)
+                if (db.GetNewConnection(true) is IDbConnection connection)
                 {
                     if (connection.State == ConnectionState.Open)
                     {
                         var insert_ind = connection.Insert(value);
                         if (insert_ind != null)
                         {
-                            return db.Get<T>(Convert.ToInt32(insert_ind));
+                            return connection.Get<T>(insert_ind);
                         }
                     }
                 }
@@ -158,12 +178,59 @@ namespace SqlTableAssistant.Dommel
             }
             return null;
         }
+
+        public static IEnumerable<T> InsertAll<T>(this IMainDatabase db, IEnumerable<T> values) where T : class
+        {
+            try
+            {
+                if (db.GetNewConnection(true) is IDbConnection connection)
+                {
+                    if (connection.State == ConnectionState.Open)
+                    {
+                        using (var tr = connection.BeginTransaction())
+                        {
+                            var list = new List<T>();
+                            foreach (var value in values)
+                            {
+                                var insert_ind = connection.Insert(value, tr);
+                                if (insert_ind != null)
+                                {
+                                    var item = connection.Get<T>(insert_ind);
+                                    if (item != null)
+                                    {
+                                        list.Add(item);
+                                    }
+                                    else
+                                    {
+                                        tr.Rollback();
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    tr.Rollback();
+                                    break;
+                                }
+                            }
+                            tr.Commit();
+                            return list;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                db.CallError(ex.Message, ex.StackTrace);
+            }
+            return Enumerable.Empty<T>();
+        }
+
         public static bool TryInsert<T>(this IMainDatabase db, T data, out T value) where T : class
         {
             value = null;
             try
             {
-                if (db.IsConnected() && db.GetNewConnection(true) is IDbConnection connection)
+                if (db.GetNewConnection(true) is IDbConnection connection)
                 {
                     if (connection.State == ConnectionState.Open)
                     {
@@ -186,7 +253,7 @@ namespace SqlTableAssistant.Dommel
         {
             try
             {
-                if (db.IsConnected() && db.GetNewConnection(true) is IDbConnection connection)
+                if (db.GetNewConnection(true) is IDbConnection connection)
                 {
                     if (connection.State == ConnectionState.Open)
                     {
@@ -204,7 +271,7 @@ namespace SqlTableAssistant.Dommel
         {
             try
             {
-                if (db.IsConnected() && db.GetNewConnection(true) is IDbConnection connection)
+                if (db.GetNewConnection(true) is IDbConnection connection)
                 {
                     if (connection.State == ConnectionState.Open)
                     {
